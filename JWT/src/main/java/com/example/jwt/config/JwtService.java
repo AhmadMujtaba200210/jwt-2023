@@ -42,7 +42,6 @@ public class JwtService {
                 .signWith(getSignInKey(), SignatureAlgorithm.ES256)
                 .compact();// this will generate and return the token
     }
-<<<<<<< HEAD
 
     public boolean isTokenValid(String token,UserDetails userDetails){
         final String username=extractUsername(token);
@@ -55,8 +54,6 @@ public class JwtService {
     private Date extractExpiration(String token){
         return extractClaim(token, Claims::getExpiration);
     }
-=======
->>>>>>> parent of cf7a56c... feat: isToken valid
     private Claims extractAllClaims(String token){
         return Jwts
                 .parserBuilder()
