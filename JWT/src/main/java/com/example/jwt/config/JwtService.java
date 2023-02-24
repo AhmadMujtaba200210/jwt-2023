@@ -42,6 +42,10 @@ public class JwtService {
                 .signWith(getSignInKey(), SignatureAlgorithm.ES256)
                 .compact();// this will generate and return the token
     }
+    public boolean isTokenValid(String token,UserDetails userDetails){
+        final String username=extractUsername(token);
+        return (username.equals(userDetails.getUsername()))&& !isTokenExpired(token);
+    }
     private Claims extractAllClaims(String token){
         return Jwts
                 .parserBuilder()
