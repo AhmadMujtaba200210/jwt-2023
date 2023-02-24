@@ -19,6 +19,20 @@ public class JwtService {
         final Claims claims=extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
+// claims are the authorities, any information to store in my token etc
+    public String generateToken(
+            Map<String,Object> extraClaims,
+            UserDetails userDetails
+    ){
+        return Jwts
+                .builder()
+                .setClaims(extraClaims)
+                .setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis()+1000*60*24))
+                .signWith(getSignInKey(), SignatureAlgorithm.ES256)
+                .compact();// this will generate and return the token
+    }
     private Claims extractAllClaims(String token){
         return Jwts
                 .parserBuilder()
